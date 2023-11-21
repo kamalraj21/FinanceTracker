@@ -1,5 +1,5 @@
 # FinanceTracker
-This repository contains all the project files for the FinanceTracker.
+This repository contains all the project files for the FinanceTracker app.
 
 ## Project Scope
 
