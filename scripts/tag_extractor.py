@@ -20,13 +20,15 @@ class TagPreprocessor(Preprocessor):
             yaml_content = yaml.safe_load(front_matter.group(1))
             content = content[front_matter.end():]  # Adjust content to exclude front matter
         content_without_tags = re.sub(r'\[Tag: .+?\]', '', content).strip()
-        return [content_without_tags], yaml_content
+        return content_without_tags.split('\n'), yaml_content
+
 
 def parse_markdown(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         text = file.read()
     md = markdown.Markdown(extensions=[TagExtractor()])
-    content, yaml_content = md.convert(text)
+    lines, yaml_content = md.preprocessors['tag_extractor'].run(text.split('\n'))
+    content = '\n'.join(lines)  # Join the lines back into a single string
     return yaml_content, content
 
 def parse_all_markdown_files(docs_path):
