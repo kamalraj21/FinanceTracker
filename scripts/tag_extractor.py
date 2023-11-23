@@ -4,6 +4,7 @@ from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 import re
 import yaml
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 class TagExtractor(Preprocessor):
     def run(self, lines):
@@ -43,18 +44,12 @@ def parse_all_markdown_files(docs_path):
             print(f"Processed {filename}")
     return all_content
 
-# Example usage
-if __name__ == "__main__":
-    docs_path = '../docs'  # Adjust the path to the docs directory if necessary
-    all_extracted_content = parse_all_markdown_files(docs_path)
-    for filename, content in all_extracted_content.items():
-        print(f"Filename: {filename}")
-        print("Front Matter:", content['front_matter'])
-        print("Tagged Content:", content['tagged_content'])
-        # You can now use content['front_matter'] and content['tagged_content'] as needed
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-
 def render_to_html(template_name, content, output_filename):
+    # Ensure the output directory exists
+    output_dir = os.path.dirname(output_filename)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, exist_ok=True)
+    
     # Load the template environment
     env = Environment(
         loader=FileSystemLoader(searchpath='../html_templates'),
