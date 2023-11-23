@@ -9,16 +9,14 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 class TagExtractor(Preprocessor):
     def run(self, lines):
         content = "\n".join(lines)
-        # Extract YAML front matter
-        front_matter = re.search(r'^---(.+?)---', content, re.DOTALL)
-        yaml_content = yaml.safe_load(front_matter.group(1)) if front_matter else {}
+        # Extract YAML front matter...
         
         # Extract tagged sections
         tag_pattern = re.compile(r'\[Tag: (.+?)\]')
         tagged_content = {}
         for tag in tag_pattern.findall(content):
-            start = content.find(f"[Tag: {tag}]")
-            end = content.find("[Tag:", start + 1)
+            start = content.find(f"[Tag: {tag}]") + len(f"[Tag: {tag}]")
+            end = content.find("[Tag:", start)
             tagged_content[tag] = content[start:end].strip() if end != -1 else content[start:].strip()
 
         return yaml_content, tagged_content
