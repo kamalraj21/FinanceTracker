@@ -1,16 +1,15 @@
-# Get Started with FinanceTracker
+---
+title: Get Started with FinanceTracker
+year: 2023
+---
 
-## Introduction [Tag: introduction]
-Welcome to FinanceTracker! This guide will help you get started with managing your finances.
+Welcome to FinanceTracker! This guide will help you quickly set up and start using the app to manage your finances effectively.
 
-## Setting Up Your Account [Tag: setting_up]
-- Step 1: Download the app...
-- Step 2: Create your account...
+## Installation [Reusable: Installation]
+Download the app from the iOS App Store, Google Play Store or our App marketplace.
 
-## Your First Expense Entry [Tag: first_expense]
-Here's how to record your first expense...
+## Account Setup [Reusable: AccountSetup]
+Create an account to start tracking your finances.
 
-## Tips for Effective Finance Management [Tag: tips]
-To make the most out of FinanceTracker follow these suggestions
-- To quickly create an entry for expenses use the chat mode.
-- For accessibility in charts, use the color view mode.
+## First Steps
+Learn the basics to get up and running with FinanceTracker.

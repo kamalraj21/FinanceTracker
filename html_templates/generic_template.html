@@ -2,23 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ content.front_matter.title }}</title>
 </head>
 <body>
-    <header>
-        <h1>{{ content.front_matter.title }}</h1>
-    </header>
-    <main>
-        {% for section, body in content.tagged_content.items() %}
-        <section id="{{ section | lower }}">
-            <h2>{{ section }}</h2>
-            {{ body | safe }}
-        </section>
-        {% endfor %}
-    </main>
-    <footer>
-        <p>&copy; {{ content.front_matter.year }} FinanceTracker</p>
-    </footer>
+    <h1>{{ content.front_matter.title }}</h1>
+    {{ content.content | safe }}
 </body>
 </html>

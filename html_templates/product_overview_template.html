@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FinanceTracker Product Overview</title>
+    <meta charset="UTF-8">
+    <title>{{ content.front_matter.title }}</title>
 </head>
 <body>
-    <h1>FinanceTracker Product Overview</h1>
-    <!-- Insert overview content here -->
-    <div id="overview-content">
-        <!-- Content injected by script -->
-    </div>
+    <h1>{{ content.front_matter.title }}</h1>
+    <div>{{ content.content | safe }}</div>
 </body>
 </html>

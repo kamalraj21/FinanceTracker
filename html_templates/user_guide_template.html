@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FinanceTracker User Guide</title>
+    <meta charset="UTF-8">
+    <title>{{ content.front_matter.title }}</title>
 </head>
 <body>
-    <h1>FinanceTracker User Guide</h1>
-    <!-- Insert detailed user guide content here -->
-    <div id="user-guide-content">
-        <!-- Content injected by script -->
+    <h1>{{ content.front_matter.title }}</h1>
+    <div>
+        <!-- Direct content from the User Guide markdown -->
+        {{ content.sections.DetailedFeatureGuide | safe }}
+        {{ content.sections.AdvancedUsage | safe }}
+    </div>
+    <hr>
+    <div>
+        <!-- Reused content from the Overview markdown -->
+        <h2>Key Features</h2>
+        {{ reusable.KeyFeatures | safe }}
     </div>
 </body>
 </html>

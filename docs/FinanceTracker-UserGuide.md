@@ -1,25 +1,12 @@
-# FinanceTracker User Guide
+---
+title: FinanceTracker User Guide
+year: 2023
+---
 
-[Tag: introduction]
-## Introduction
-This comprehensive guide will walk you through all the features of FinanceTracker, helping you to effectively manage your finances.
+This comprehensive guide walks you through the features of FinanceTracker.
 
-[Tag: installation]
-## Installation
-Learn how to install FinanceTracker on your device for both iOS and Android platforms.
+## Navigating the App
+Understand the dashboard and various sections.
 
-[Tag: setup]
-## Setup and Configuration
-Get step-by-step instructions on setting up your FinanceTracker account and configuring it to track your expenses and investments.
-
-[Tag: features]
-## Features Overview
-Explore the robust features of FinanceTracker, including expense tracking, investment monitoring, and budget planning.
-
-[Tag: faq]
-## Frequently Asked Questions (FAQs)
-Find answers to common questions and tips for troubleshooting issues.
-
-[Tag: support]
-## Customer Support
-Need more help? Contact our customer support team for assistance.
+## Advanced Features
+Learn about advanced features and how to use them effectively.
