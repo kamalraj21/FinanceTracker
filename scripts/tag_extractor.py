@@ -1,18 +1,21 @@
 import os
+import re
 import markdown
 import yaml
-import re
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2.exceptions import TemplateNotFound
 
+# Define a dictionary to store reusable content
 reusable_content = {}
 
 def clean_annotations(markdown_content):
+    # Clean out the [Reusable: ...] annotations from the markdown content
     return re.sub(r'\[Reusable: .+?\]', '', markdown_content)
 
 def extract_reusable_sections(markdown_content):
-    pattern = re.compile(r'\[Reusable: (\w+)\]\n([\s\S]*?)(?=\n## |\Z)', re.DOTALL)
-    sections = pattern.findall(markdown_content)
-    for section_name, section_content in sections:
+    # Extract reusable sections marked with [Reusable: SectionName]
+    reusable_sections = re.findall(r'\[Reusable: (\w+)\]\n([\s\S]*?)\n\[EndReusable\]', markdown_content)
+    for section_name, section_content in reusable_sections:
         reusable_content[section_name] = markdown.markdown(section_content.strip())
 
 def parse_markdown(file_path):
@@ -27,12 +30,18 @@ def parse_markdown(file_path):
     return {'front_matter': yaml_content, 'content': html_content}
 
 def render_to_html(template_name, content_dict, output_filename, env):
-    template = env.get_template(template_name)
-    content_dict['reusable'] = reusable_content
-    html_content = template.render(content_dict)
+    try:
+        template = env.get_template(template_name)
+    except TemplateNotFound:
+        print(f"Template '{template_name}' not found.")
+        return
+    # Pass the reusable_content directly
+    html_content = template.render(front_matter=content_dict['front_matter'], content=content_dict['content'], reusable=reusable_content)
     os.makedirs(os.path.dirname(output_filename), exist_ok=True)
     with open(output_filename, 'w', encoding='utf-8') as file:
         file.write(html_content)
+    print(f"{output_filename} has been created.")
+
 
 def main():
     env = Environment(
@@ -43,11 +52,10 @@ def main():
     for filename in os.listdir(docs_path):
         if filename.endswith(".md"):
             file_path = os.path.join(docs_path, filename)
-            content_dict = parse_markdown(file_path)
-            template_name = 'generic_template.html'
+            content_dict = parse_markdown(file_path)  # This creates content_dict
+            template_name = filename.replace('FinanceTracker-', '').replace('.md', '_template.html').lower()
             output_file = f"../html_outputs/{filename.replace('.md', '.html')}"
-            render_to_html(template_name, content_dict, output_file, env)
-            print(f"Generated HTML for {filename}")
+            render_to_html(template_name, content_dict, output_file, env)  # content_dict is passed here
 
 if __name__ == "__main__":
     main()
