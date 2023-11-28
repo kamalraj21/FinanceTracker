@@ -7,10 +7,10 @@
   <body>
     <h1>{{ front_matter.title }}</h1>
     <div>{{ content | safe }}</div>
-    <!-- Include the reusable content if it exists 
-    {% if content_dict.reusable.KeyFeatures %}
-        <div>{{ content_dict.reusable.KeyFeatures | safe }}</div>
-    {% endif %}
-    -->
+    <!-- Include the reusable content if it exists -->
+{% if reusable.KeyFeatures %}
+    <div>{{ reusable.KeyFeatures | safe }}</div>
+{% endif %}
+
 </body>
 </html>
