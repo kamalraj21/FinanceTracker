@@ -9,24 +9,24 @@ from jinja2.exceptions import TemplateNotFound
 reusable_content = {}
 
 def clean_annotations(markdown_content):
-    # Clean out the [Reusable: ...] and [EndReusable] annotations from the markdown content
-    markdown_content = re.sub(r'\[Reusable: .+?\]', '', markdown_content)
+    # Clean out the [Reusable id="..."] and [EndReusable] annotations from the markdown content
+    markdown_content = re.sub(r'\[Reusable id="\w+"\]', '', markdown_content)
     markdown_content = re.sub(r'\[EndReusable\]', '', markdown_content)
     return markdown_content
 
 def extract_reusable_sections(markdown_content):
-    # Extract reusable sections marked with [Reusable: SectionName]
-    reusable_sections = re.findall(r'\[Reusable: (\w+)\]\n([\s\S]*?)\n\[EndReusable\]', markdown_content)
-    for section_name, section_content in reusable_sections:
-        reusable_content[section_name] = markdown.markdown(section_content.strip())
+    # Extract reusable sections marked with [Reusable id="SectionId"]
+    reusable_sections = re.findall(r'\[Reusable id="(\w+)"\]\n([\s\S]*?)\n\[EndReusable\]', markdown_content)
+    for section_id, section_content in reusable_sections:
+        reusable_content[section_id] = section_content.strip()
 
 def include_sections(markdown_content):
-    # Replace [Include: SectionName] annotations with the corresponding reusable HTML content
+    # Replace [Include id="SectionId"] annotations with the corresponding reusable content
     def replace_include(match):
-        section_name = match.group(1)
-        return reusable_content.get(section_name, f"<!-- Section {section_name} not found -->")
+        section_id = match.group(1)
+        return reusable_content.get(section_id, f"<!-- Section {section_id} not found -->")
     
-    return re.sub(r'\[Include: (\w+)\]', replace_include, markdown_content)
+    return re.sub(r'\[Include id="(\w+)"\]', replace_include, markdown_content)
 
 def parse_markdown(file_path):
     try:
